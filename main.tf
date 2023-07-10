@@ -14,8 +14,9 @@ provider "aws" {
 }
 
 
-# Output the public URL of the Lambda function
-
-output "lambda_url" {
-  value = aws_lambda_function.whatsapp_webhook_lambda.invoke_arn
+module "whatsapp-webhook-lambda" {
+  source = "./modules/whatsapp-webhook-lambda"
+  aws_access_key_id      = var.aws_access_key_id
+  aws_secret_access_key  = var.aws_secret_access_key
+  whatsapp_webhook_token = var.whatsapp_webhook_token
 }
