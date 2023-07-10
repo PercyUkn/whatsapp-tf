@@ -13,9 +13,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
+module "whatsapp-server-ecs" {
+  source                 = "./modules/whatsapp-server-ecs"
+  aws_access_key_id      = var.aws_access_key_id
+  aws_secret_access_key  = var.aws_secret_access_key
+  whatsapp_webhook_token = var.whatsapp_webhook_token
+  email_subscriber       = var.email_subscriber
+}
 
 module "whatsapp-webhook-lambda" {
-  source = "./modules/whatsapp-webhook-lambda"
+  source                 = "./modules/whatsapp-webhook-lambda"
   aws_access_key_id      = var.aws_access_key_id
   aws_secret_access_key  = var.aws_secret_access_key
   whatsapp_webhook_token = var.whatsapp_webhook_token

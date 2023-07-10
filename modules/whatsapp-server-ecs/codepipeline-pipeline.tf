@@ -1,8 +1,6 @@
-# Create a CodePipeline pipeline
-
 resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
   name     = "whatsapp-webhook-pipeline" # Update with your desired pipeline name
-  role_arn = aws_iam_role.whatsapp_webhook_pipeline_role.arn
+  role_arn = aws_iam_role.whatsapp_server_pipeline_role.arn
 
   # Pipeline stages and actions
 
@@ -23,7 +21,7 @@ resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        RepositoryName = aws_codecommit_repository.whatsapp_webhook.repository_name
+        RepositoryName = aws_codecommit_repository.whatsapp_server.repository_name
         BranchName     = "master"
       }
     }
@@ -42,7 +40,7 @@ resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
       output_artifacts = ["build_output"]
 
       configuration = {
-        ProjectName = aws_codebuild_project.whatsapp_webhook_codebuild_project.name
+        ProjectName = aws_codebuild_project.whatsapp_server_codebuild_project.name
       }
     }
   }

@@ -5,13 +5,16 @@ variable "aws_region" {
 
 variable "app_name" {
   type    = string
-  default = "whatsapp-webhook"
+  default = "whatsapp-server"
+}
+
+variable "email_subscriber" {
+  type = string
 }
 
 variable "aws_access_key_id" {
   type = string
 }
-
 
 variable "aws_secret_access_key" {
   type = string

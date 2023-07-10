@@ -9,3 +9,7 @@ variable "aws_secret_access_key" {
 variable "whatsapp_webhook_token" {
   type = string
 }
+
+variable "email_subscriber" {
+  type = string
+}
