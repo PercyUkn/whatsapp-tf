@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Exporting AWS Variables
+      - echo Defining Lambda target
+      - AWS_LAMBDA_NAME=${lambda_name}
+      - echo $AWS_LAMBDA_NAME
+      - echo Exporting AWS Credentials
+      - export AWS_ACCESS_KEY_ID=${aws_access_key_id}
+      - export AWS_SECRET_ACCESS_KEY=${aws_secret_access_key}
+      - echo Logging in to Amazon ECR...
+      - echo Trying to login with ECR credentials...
+      - aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+  build:
+    commands:
+      - echo Building Docker image
+      - docker build -t ${ecr_repo_name}:latest .
+  post_build:
+    commands:
+      - echo Pushing Docker image to ECR
+      - docker push ${ecr_repo_name}:latest
+      - echo Deploying Image to Lambda...
+      - aws lambda update-function-code --function-name $AWS_LAMBDA_NAME --image-uri ${ecr_repo_name}:latest
