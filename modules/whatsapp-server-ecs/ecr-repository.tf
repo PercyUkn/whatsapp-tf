@@ -1,5 +1,5 @@
 # Create an ECR repository
 
 resource "aws_ecr_repository" "whatsapp_server" {
-  name = "${var.app_name}-ecr-repository"
+  name = "${local.app_name}-ecr-repository"
 }

@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "whatsapp_server_task_definition" {
-  family                   = "${var.app_name}-task-definition-tf"
+  family                   = "${local.app_name}-task-definition-tf"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "1024"
   memory                   = "3072"
@@ -16,13 +16,13 @@ resource "aws_ecs_task_definition" "whatsapp_server_task_definition" {
 
   container_definitions = jsonencode([
     {
-      name : "${var.app_name}-container",
+      name : "${local.app_name}-container",
       image : "${aws_ecr_repository.whatsapp_server.name}:latest",
       // Verificar si es correcto cpu:0
       cpu : 0,
       portMappings : [
         {
-          "name" : "${var.app_name}-3001-tcp-main",
+          "name" : "${local.app_name}-3001-tcp-main",
           "containerPort" : 3001,
           "hostPort" : 3001,
           "protocol" : "tcp",
@@ -45,15 +45,15 @@ resource "aws_ecs_task_definition" "whatsapp_server_task_definition" {
         },
         {
           "name" : "IMGUR_CLIENT_ID",
-          "value" : var.imgur_client_id
+          "value" : local.imgur_client_id[local.env]
         },
         {
           "name" : "META_ID_NUMBER",
-          "value" : var.meta_id_number
+          "value" : local.meta_id_number[local.env]
         },
         {
           "name" : "META_TOKEN",
-          "value" : var.meta_token
+          "value" : local.meta_token[local.env]
         },
         {
           "name" : "PORT",
@@ -61,12 +61,12 @@ resource "aws_ecs_task_definition" "whatsapp_server_task_definition" {
         },
         {
           "name" : "WEBHOOK_TOKEN",
-          "value" : var.webhook_token
+          "value" : local.webhook_token[local.env]
         },
         {
           "name" : "CANTIDAD_CLIENTES_INICIALES",
           // TODO: Verificar si es correcto poner un número o string
-          "value" : var.cantidad_clientes_iniciales
+          "value" : local.cantidad_clientes_iniciales[local.env]
         }
       ],
       mountPoints : [],
@@ -75,7 +75,7 @@ resource "aws_ecs_task_definition" "whatsapp_server_task_definition" {
         "logDriver" : "awslogs",
         "options" : {
           "awslogs-create-group" : "true",
-          "awslogs-group" : "/ecs/${var.app_name}-task-tf",
+          "awslogs-group" : "/ecs/${local.app_name}-task-tf",
           "awslogs-region" : "us-east-1",
           "awslogs-stream-prefix" : "ecs"
         }

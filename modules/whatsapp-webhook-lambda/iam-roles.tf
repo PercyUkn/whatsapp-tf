@@ -1,5 +1,5 @@
 resource "aws_iam_role" "whatsapp_webhook_lambda_role" {
-  name = "${var.app_name}-lambda-role" # Update with your desired IAM role name
+  name = "${local.app_name}-lambda-role" # Update with your desired IAM role name
 
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
@@ -30,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "whatsapp_webhook_policy_attachment" {
 # Create an IAM role for the CodePipeline pipeline
 
 resource "aws_iam_role" "whatsapp_webhook_pipeline_role" {
-  name = "${var.app_name}-pipeline-role" # Update with your desired IAM role name
+  name = "${local.app_name}-pipeline-role" # Update with your desired IAM role name
 
   assume_role_policy = jsonencode(
     {
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy_attachment" "whatsapp_webhook_pipeline_policy_atta
 # Create an IAM role for the CodeBuild project
 
 resource "aws_iam_role" "whatsapp_webhook_codebuild_role" {
-  name = "${var.app_name}-codebuild-role" # Update with your desired IAM role name
+  name = "${local.app_name}-codebuild-role" # Update with your desired IAM role name
 
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",

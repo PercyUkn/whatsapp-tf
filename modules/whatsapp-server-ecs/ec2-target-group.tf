@@ -1,9 +1,9 @@
 resource "aws_lb_target_group" "whatsapp-server-alb-tg" {
-  name        = "${var.app_name}-lb-alb-tg-tf"
+  name        = "${local.app_name}-lb-alb-tg-tf"
   target_type = "ip"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = var.load_balancer_vpc_id
+  vpc_id      = local.load_balancer_vpc_id[local.env]
   health_check {
     enabled = true
     healthy_threshold = 2

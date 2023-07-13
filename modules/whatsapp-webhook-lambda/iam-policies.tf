@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "whatsapp_webhook_lambda_policy" {
-  name        = "${var.app_name}-lambda-policy" # Update with your desired policy name
+  name        = "${local.app_name}-lambda-policy" # Update with your desired policy name
   description = "Basic policy for Lambda function"
 
   policy = jsonencode({
@@ -28,7 +28,7 @@ resource "aws_iam_policy" "whatsapp_webhook_lambda_policy" {
 }
 
 resource "aws_iam_policy" "whatsapp_webhook_pipeline_policy" {
-  name        = "${var.app_name}-pipeline-policy" # Update with your desired policy name
+  name        = "${local.app_name}-pipeline-policy" # Update with your desired policy name
   description = "Basic policy for CodePipeline pipeline"
 
   policy = jsonencode({
@@ -124,6 +124,6 @@ data "aws_iam_policy_document" "codebuild_policy" {
 }
 
 resource "aws_iam_policy" "whatsapp_webhook_codebuild_policy" {
-  name   = "${var.app_name}-codebuild-policy"
+  name   = "${local.app_name}-codebuild-policy"
   policy = data.aws_iam_policy_document.codebuild_policy.json
 }

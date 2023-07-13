@@ -1,7 +1,7 @@
 # Create an ECR repository
 
 resource "aws_ecr_repository" "whatsapp_webhook" {
-  name         = "${var.app_name}-ecr-repository"
+  name         = "${local.app_name}-ecr-repository"
   force_delete = true
 }
 
@@ -18,7 +18,7 @@ resource "null_resource" "pull_and_push_image" {
       docker tag alpine:latest ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest
 
       echo "Authenticating with the ECR registry using the AWS CLI..."
-      aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.whatsapp_webhook.repository_url}
+      aws ecr get-login-password --region ${local.aws_region[local.env]} | docker login --username AWS --password-stdin ${aws_ecr_repository.whatsapp_webhook.repository_url}
 
       echo "Pushing the image to the ECR repository..."
       docker push ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest

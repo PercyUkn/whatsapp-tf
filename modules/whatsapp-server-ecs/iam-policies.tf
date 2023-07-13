@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "whatsapp_server_pipeline_policy" {
-  name        = "${var.app_name}-pipeline-policy" # Update with your desired policy name
+  name        = "${local.app_name}-pipeline-policy" # Update with your desired policy name
   description = "Basic policy for CodePipeline pipeline"
 
   policy = jsonencode({
@@ -86,7 +86,7 @@ data "aws_iam_policy_document" "codebuild_policy" {
 }
 
 resource "aws_iam_policy" "whatsapp_server_codebuild_policy" {
-  name   = "${var.app_name}-codebuild-policy"
+  name   = "${local.app_name}-codebuild-policy"
   policy = data.aws_iam_policy_document.codebuild_policy.json
 }
 
@@ -112,14 +112,14 @@ data "aws_iam_policy_document" "ecs_task_execution_policy" {
 }
 
 resource "aws_iam_policy" "whatsapp_server_ecs_task_execution_policy" {
-  name   = "${var.app_name}-ecs-task-execution-policy"
+  name   = "${local.app_name}-ecs-task-execution-policy"
   policy = data.aws_iam_policy_document.ecs_task_execution_policy.json
 }
 
 
 resource "aws_iam_policy" "whatsapp_server_task_execution_policy" {
-  name        = "${var.app_name}-task-execution-policy"
-  description = "Task Execution Role Policy para la tarea de ${var.app_name}"
+  name        = "${local.app_name}-task-execution-policy"
+  description = "Task Execution Role Policy para la tarea de ${local.app_name}"
 
   policy = <<EOF
 {
