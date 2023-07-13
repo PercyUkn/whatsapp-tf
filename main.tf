@@ -30,6 +30,6 @@ module "whatsapp-webhook-lambda" {
   source                 = "./modules/whatsapp-webhook-lambda"
   aws_access_key_id      = var.aws_access_key_id
   aws_secret_access_key  = var.aws_secret_access_key
-  whatsapp_webhook_token = var.whatsapp_webhook_token
+  whatsapp_webhook_token = var.webhook_token
   whatsapp_server_url    = module.whatsapp-server-ecs.whatsapp_server_lb_dns_name
 }

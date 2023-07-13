@@ -12,11 +12,6 @@ variable "aws_secret_access_key" {
   description = "El SK que toma el Docker de codebuild para iniciar sesión en AWS y usar ECR"
 }
 
-
-variable "whatsapp_webhook_token" {
-  type = string
-}
-
 variable "email_subscriber" {
   type        = string
   description = "Email que se va a suscribir a las notificaciones de sesión mediante SNS"
@@ -45,7 +40,7 @@ variable "meta_token" {
 
 variable "webhook_token" {
   type        = string
-  description = "Token para registrar el webhook"
+  description = "Token para registrar el webhook de WhatsApp"
 }
 
 variable "cantidad_clientes_iniciales" {
