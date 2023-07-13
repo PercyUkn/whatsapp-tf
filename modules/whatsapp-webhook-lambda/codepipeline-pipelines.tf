@@ -1,7 +1,7 @@
 # Create a CodePipeline pipeline
 
 resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
-  name     = "whatsapp-webhook-pipeline" # Update with your desired pipeline name
+  name     = "${var.app_name}-pipeline-tf" # Update with your desired pipeline name
   role_arn = aws_iam_role.whatsapp_webhook_pipeline_role.arn
 
   # Pipeline stages and actions

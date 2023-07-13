@@ -14,5 +14,10 @@ phases:
       - docker build -t ${ecr_repo_name}:latest .
   post_build:
     commands:
+      - echo Build completed on `date`
       - echo Pushing Docker image to ECR
       - docker push ${ecr_repo_name}:latest
+      - echo Writing image definitions file...
+      - printf '[{"name":"%s","imageUri":"%s"}]' ${container_name}  "${ecr_repo_name}:latest" > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json

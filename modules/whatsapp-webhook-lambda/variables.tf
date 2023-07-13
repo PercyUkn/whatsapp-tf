@@ -9,14 +9,22 @@ variable "app_name" {
 }
 
 variable "aws_access_key_id" {
-  type = string
+  type        = string
+  description = "El AK que toma el Docker de codebuild para iniciar sesión en AWS y usar ECR"
 }
 
 
 variable "aws_secret_access_key" {
-  type = string
+  type        = string
+  description = "El SK que toma el Docker de codebuild para iniciar sesión en AWS y usar ECR"
 }
 
 variable "whatsapp_webhook_token" {
-  type = string
+  type        = string
+  description = "Token para registrar el webhook"
+}
+
+variable "whatsapp_server_url" {
+  type        = string
+  description = "La URL del servidor de WhatsApp para reenviar los mensajes"
 }

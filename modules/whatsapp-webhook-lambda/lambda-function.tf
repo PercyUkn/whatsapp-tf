@@ -7,7 +7,8 @@ resource "aws_lambda_function" "whatsapp_webhook_lambda" {
 
   environment {
     variables = {
-      WHATSAPP_TOKEN = var.whatsapp_webhook_token
+      WHATSAPP_TOKEN      = var.whatsapp_webhook_token
+      WHATSAPP_SERVER_URL = var.whatsapp_server_url
     }
   }
 

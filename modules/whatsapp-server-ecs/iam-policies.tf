@@ -89,3 +89,55 @@ resource "aws_iam_policy" "whatsapp_server_codebuild_policy" {
   name   = "${var.app_name}-codebuild-policy"
   policy = data.aws_iam_policy_document.codebuild_policy.json
 }
+
+
+
+data "aws_iam_policy_document" "ecs_task_execution_policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:*",
+      "s3-object-lambda:*"
+    ]
+    resources = [aws_s3_bucket.whatsapp_sessions.arn]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "sns:*"
+    ]
+    resources = [aws_sns_topic.session_restart_topic.arn]
+  }
+}
+
+resource "aws_iam_policy" "whatsapp_server_ecs_task_execution_policy" {
+  name   = "${var.app_name}-ecs-task-execution-policy"
+  policy = data.aws_iam_policy_document.ecs_task_execution_policy.json
+}
+
+
+resource "aws_iam_policy" "whatsapp_server_task_execution_policy" {
+  name        = "${var.app_name}-task-execution-policy"
+  description = "Task Execution Role Policy para la tarea de ${var.app_name}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}

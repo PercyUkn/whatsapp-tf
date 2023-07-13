@@ -19,6 +19,7 @@ resource "aws_codebuild_project" "whatsapp_server_codebuild_project" {
     buildspec = templatefile("${path.module}/buildspec.yml",
       {
         ecr_repo_name         = aws_ecr_repository.whatsapp_server.repository_url,
+        container_name        = "${var.app_name}-container"
         AWS_REGION            = var.aws_region,
         AWS_ACCOUNT_ID        = data.aws_caller_identity.current.account_id,
         aws_access_key_id     = var.aws_access_key_id,

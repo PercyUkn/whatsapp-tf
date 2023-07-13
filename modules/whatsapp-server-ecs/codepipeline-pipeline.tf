@@ -1,5 +1,5 @@
 resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
-  name     = "whatsapp-webhook-pipeline" # Update with your desired pipeline name
+  name     = "${var.app_name}-pipeline-tf" # Update with your desired pipeline name
   role_arn = aws_iam_role.whatsapp_server_pipeline_role.arn
 
   # Pipeline stages and actions
@@ -41,6 +41,26 @@ resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
 
       configuration = {
         ProjectName = aws_codebuild_project.whatsapp_server_codebuild_project.name
+      }
+    }
+  }
+
+  stage {
+    name = "Deploy"
+
+    action {
+      name            = "DeployAction"
+      category        = "Deploy"
+      owner           = "AWS"
+      provider        = "ECS"
+      version         = "1"
+      input_artifacts = ["build_output"]
+
+      configuration = {
+        ClusterName       = aws_ecs_cluster.whatsapp_server_ecs_cluster.name
+        ServiceName       = aws_ecs_service.whatsapp_server_ecs_service.name
+        FileName          = "imagedefinitions.json"
+        DeploymentTimeout = "10" # Update with the desired deployment timeout value
       }
     }
   }
