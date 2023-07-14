@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "pipeline_artifacts" {
 
 # Bucket para las sesiones de WhatsApp (whatsapp-web.js)
 resource "aws_s3_bucket" "whatsapp_sessions" {
-  bucket        = "${var.app_name}-unique-tf" # Update with your desired S3 bucket name
+  bucket        = "${var.app_name}-sessions" # Update with your desired S3 bucket name
   force_destroy = true
 }
 

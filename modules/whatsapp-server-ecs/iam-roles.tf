@@ -23,6 +23,10 @@ resource "aws_iam_role_policy_attachment" "whatsapp_server_pipeline_policy_attac
   role       = aws_iam_role.whatsapp_server_pipeline_role.name
 }
 
+resource "aws_iam_role_policy_attachment" "whatsapp_server_pipeline_policy_attachment_ecs_access" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
+  role       = aws_iam_role.whatsapp_server_pipeline_role.name
+}
 
 # Create an IAM role for the CodeBuild project
 

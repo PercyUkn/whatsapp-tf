@@ -11,5 +11,5 @@ output "whatsapp_server_repo_url" {
 }
 
 output "whatsapp_server_lb_url" {
-  value = module.whatsapp-server-ecs.whatsapp_server_lb_dns_name
+  value = "http://${module.whatsapp-server-ecs.whatsapp_server_lb_dns_name}/api/webhook"
 }

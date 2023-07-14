@@ -58,7 +58,7 @@ resource "aws_iam_policy" "whatsapp_server_pipeline_policy" {
           "codebuild:BatchGetBuilds"
         ],
         "Resource" : aws_codebuild_project.whatsapp_server_codebuild_project.arn
-      }
+      },
     ]
   })
 }
