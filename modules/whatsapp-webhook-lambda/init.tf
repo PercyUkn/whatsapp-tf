@@ -14,30 +14,6 @@ locals {
     "prd" = ""
   }
 
-  aws_access_key_id = {
-    "dev" = ""
-    "qa"  = ""
-    "prd" = ""
-  }
-
-  aws_secret_access_key = {
-    "dev" = ""
-    "qa"  = ""
-    "prd" = ""
-  }
-
-  email_subscriber = {
-    "dev" = ""
-    "qa"  = ""
-    "prd" = ""
-  }
-
-  load_balancer_vpc_id = {
-    "dev" = ""
-    "qa"  = ""
-    "prd" = ""
-  }
-
   whatsapp_webhook_token = {
     "dev" = ""
     "qa"  = ""
