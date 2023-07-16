@@ -141,3 +141,16 @@ resource "aws_iam_policy" "whatsapp_server_task_execution_policy" {
 }
 EOF
 }
+
+resource "aws_iam_role_policy" "event_role_policy" {
+  name   = "${var.app_name}-pipeline-execution"
+  role   = aws_iam_role.whatsapp_server_event_role.name
+  policy = jsonencode({
+    Version   = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = "codepipeline:StartPipelineExecution"
+      Resource = join("", ["arn:aws:codepipeline:", var.aws_region, ":", data.aws_caller_identity.current.account_id, ":", aws_codepipeline.whatsapp_server_pipeline.name])
+    }]
+  })
+}

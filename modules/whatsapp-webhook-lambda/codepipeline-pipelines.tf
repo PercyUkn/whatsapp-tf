@@ -25,6 +25,7 @@ resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
       configuration = {
         RepositoryName = aws_codecommit_repository.whatsapp_webhook.repository_name
         BranchName     = "master"
+        PollForSourceChanges = false
       }
     }
   }

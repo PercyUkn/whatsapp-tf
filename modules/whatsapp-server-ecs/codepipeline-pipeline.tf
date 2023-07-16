@@ -1,4 +1,6 @@
-resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
+// TODO: ADD SUPPORT FOR CHANGE DETECTION WITH EVENTBRIDGE
+
+resource "aws_codepipeline" "whatsapp_server_pipeline" {
   name     = "${var.app_name}-pipeline-tf" # Update with your desired pipeline name
   role_arn = aws_iam_role.whatsapp_server_pipeline_role.arn
 
@@ -23,6 +25,7 @@ resource "aws_codepipeline" "whatsapp_webhook_pipeline" {
       configuration = {
         RepositoryName = aws_codecommit_repository.whatsapp_server.repository_name
         BranchName     = "master"
+        PollForSourceChanges = false
       }
     }
   }
