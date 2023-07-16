@@ -10,21 +10,7 @@ resource "null_resource" "pull_and_push_image" {
 
   provisioner "local-exec" {
     command = <<EOT
-      echo "Pulling the lightest image from Docker Hub..."
-      docker pull alpine:latest
-
-      echo "Tagging the pulled image with the ECR repository URI..."
-      echo "ECR Repository: ${aws_ecr_repository.whatsapp_webhook.repository_url}"
-      docker tag alpine:latest ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest
-
-      echo "Authenticating with the ECR registry using the AWS CLI..."
-      aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.whatsapp_webhook.repository_url}
-
-      echo "Pushing the image to the ECR repository..."
-      docker push ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest
-
-      echo "Removing the locally pulled image..."
-      docker rmi alpine:latest ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest
+      docker pull alpine:latest && docker tag alpine:latest ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest && aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.whatsapp_webhook.repository_url}&& docker push ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest&& docker rmi alpine:latest ${aws_ecr_repository.whatsapp_webhook.repository_url}:latest
     EOT
   }
 }
