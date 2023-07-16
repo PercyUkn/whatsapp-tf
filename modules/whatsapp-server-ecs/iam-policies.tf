@@ -99,7 +99,7 @@ data "aws_iam_policy_document" "ecs_task_execution_policy" {
       "s3:*",
       "s3-object-lambda:*"
     ]
-    resources = [aws_s3_bucket.whatsapp_sessions.arn]
+    resources = ["*"]
   }
 
   statement {

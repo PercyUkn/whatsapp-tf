@@ -1,12 +1,12 @@
 # Create an S3 bucket for storing pipeline artifacts
 resource "aws_s3_bucket" "pipeline_artifacts" {
-  bucket        = "${var.app_name}-artifacts" # Update with your desired S3 bucket name
+  bucket        = "${var.app_name}-artifacts-2" # Update with your desired S3 bucket name
   force_destroy = true
 }
 
 # Bucket para las sesiones de WhatsApp (whatsapp-web.js)
 resource "aws_s3_bucket" "whatsapp_sessions" {
-  bucket        = "${var.app_name}-sessions" # Update with your desired S3 bucket name
+  bucket        = "${var.app_name}-sessions-2" # Update with your desired S3 bucket name
   force_destroy = true
 }
 

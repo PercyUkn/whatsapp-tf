@@ -1,17 +1,14 @@
 resource "aws_ecs_service" "whatsapp_server_ecs_service" {
   name            = "${var.app_name}-service-tf"
   cluster         = aws_ecs_cluster.whatsapp_server_ecs_cluster.id
-  task_definition = aws_ecs_task_definition.whatsapp_server_task_definition.arn
+  task_definition = aws_ecs_task_definition.whatsapp_server_task_definition.family
+  launch_type = "FARGATE"
+  scheduling_strategy = "REPLICA"
   // TODO: Verificar si se parametriza
-  desired_count = 0
+  desired_count = 1
 
   force_new_deployment = true
 
-
-  ordered_placement_strategy {
-    type  = "binpack"
-    field = "cpu"
-  }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.whatsapp-server-alb-tg.arn
@@ -24,7 +21,11 @@ resource "aws_ecs_service" "whatsapp_server_ecs_service" {
   network_configuration {
     subnets          = data.aws_subnets.vpc_subnets.ids
     security_groups  = [aws_security_group.whatsapp_server_security_group.id]
-    assign_public_ip = false
+    // OJO: Si no tiene public IP no funciona a menos que se cree o exista un NAT Gateway en la VPC
+    // Pues se requiere conectividad hacia whatsapp-web.com
+    // Además de conectividad hacia S3, ECR (API y DKR) y Cloudwatch Logs, estos pueden configurarse mediante
+    // un VPC Endpoint interface
+    assign_public_ip = true
   }
 
 }

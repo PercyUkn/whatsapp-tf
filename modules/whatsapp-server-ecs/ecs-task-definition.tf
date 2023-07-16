@@ -37,8 +37,9 @@ resource "aws_ecs_task_definition" "whatsapp_server_task_definition" {
         },
         {
           "name" : "FOLDER_NAME",
-          "value" : aws_s3_object.whatsapp_sessions_folder.id
+          "value" : basename(aws_s3_object.whatsapp_sessions_folder.id)
         },
+        // Le quita el / al final al folder
         {
           "name" : "SNS_TOPIC_ARN",
           "value" : aws_sns_topic.session_restart_topic.arn
@@ -74,10 +75,9 @@ resource "aws_ecs_task_definition" "whatsapp_server_task_definition" {
       logConfiguration : {
         "logDriver" : "awslogs",
         "options" : {
-          "awslogs-create-group" : "true",
-          "awslogs-group" : "/ecs/${var.app_name}-task-tf",
-          "awslogs-region" : "us-east-1",
-          "awslogs-stream-prefix" : "ecs"
+          "awslogs-group" : aws_cloudwatch_log_group.whatsapp-server-log-group.id,
+          "awslogs-region" : var.aws_region,
+          "awslogs-stream-prefix": "${var.app_name}-ecs-prefix"
         }
       }
     }
